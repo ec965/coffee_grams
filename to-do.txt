@@ -1,0 +1,17 @@
+argparse for brew machine type
+auto increment ID
+
+hook up hx711 and i2c LCD
+
+physical buttons? - maybe make a pcb?
+
+implement an lcd timer - button press for recording water at that time? (maybe not b/c continuous pour is a thing)
+
+buttons
+1. tare
+2. off/on
+3. timer
+5. record coffee weight
+6. record water weight
+
+figure out LCD i2c address - done: 27

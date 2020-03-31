@@ -1,6 +1,0 @@
-argparse for brew machine type
-auto increment ID
-
-hook up hx711 to pi
-
-physical buttons? - maybe make a pcb?
