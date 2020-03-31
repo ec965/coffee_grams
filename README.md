@@ -2,7 +2,7 @@
 
 Dial in your coffee with an IoT scale.
 
-current stage in outline: 3
+current stage in outline: 4
 
 ## Project Outline
 1. Setup apache webserver on raspberry pi.
