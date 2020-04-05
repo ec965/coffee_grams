@@ -1,5 +1,7 @@
 # Coffee Grams
 
+I recently shorted my pi 3b+ so I'm putting this on hold until I can get a pi4/pi zero w.
+
 Dial in your coffee with an IoT scale.
 
 current stage in outline: 4
