@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name coffee_grams)(type Legacy)(uri G:/Documents/Github/coffee_grams/CAD/esp32/coffee_grams.lib)(options "")(descr ""))
+)
