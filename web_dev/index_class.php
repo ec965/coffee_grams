@@ -6,7 +6,7 @@
 
     </head>
     <body>
-	<?php require_once("form.php"); ?>
+	<?php require_once("form_class.php"); ?>
 	<div class="container">
           <h1>Coffee Grams</h1>
 	  <form>
@@ -15,21 +15,21 @@
 	      <!--<input type="text" class="form-control" id="brew_method" name="brew_method" placeholder="">-->
 		<select class="form-control" id="brew_method" name="brew_method" maxlength="30"  placeholder="Click to type...">
 		      <!--<option value="melitta_cone">Melitta Cone</option>-->
-			<?php populate_from_db("brew_method"); ?>
+			<?php $cg->populate_from_db("brew_method"); ?>
 		</select>
             </div> 
             <div class="form-group">
               <label for="roaster">Roaster</label>
 	      <!--<input type="text" class="form-control" id="roaster" name="roaster" placeholder="">-->
 		<select class="form-control" id="roaster" name="roaster" maxlength="30" placeholder="Click to type...">
-			<?php populate_from_db("roaster"); ?> 
+			<?php $cg->populate_from_db("roaster"); ?> 
 		</select>
             </div>
             <div class="form-group">
               <label for="coffee_type">Coffee Name</label>
 	      <!--<input type="text" class="form-control" id="coffee_type" name="coffee_type" placeholder="">-->	
 		<select class="form-control" id="coffee_type" name="coffee_type" maxlength="30" placeholder="Click to type...">
-			<?php populate_from_db("name"); ?>
+			<?php $cg->populate_from_db("name"); ?>
 		</select>
             </div>
             <div class="form-group">
@@ -99,8 +99,8 @@
 			<th scope="col">Notes</th>
 			</tr>
 		</thead>
-		<tbody>
-			<?php table_from_db() ?>
+		<tbody id="dt-tbody">
+			<?php $cg->table_from_db() ?>
 		</tbody>
 		</table>	
 	</div>	
@@ -121,7 +121,7 @@
 				e.preventDefault();
 				$.ajax({
 					type: 'POST',
-					url: 'index.php',
+					url: 'index_class.php',
 					data: $('form').serialize(),
 					success: function(){
 						alert('form was submited');
@@ -133,6 +133,8 @@
 		$('#brew_method').editableSelect();
 		$('#roaster').editableSelect();
 		$('#coffee_type').editableSelect();
+
+
 	</script>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 	<script>
@@ -144,13 +146,13 @@
 
 		    // The data for our dataset
 			data: {
-		    		labels: [<?php chart_string_from_db("timestamp"); ?> ],
+		    		labels: [<?php $cg->chart_string_from_db("timestamp"); ?> ],
 				datasets: [{
 					label: 'Coffee Weight',
 					backgroundColor: 'rgb(255, 99, 132)',
 					borderColor: 'rgb(255, 99, 132)',
 					yAxisID:'num',
-					data: [<?php chart_from_db("weight"); ?>],
+					data: [<?php $cg->chart_from_db("weight"); ?>],
 					fill:false,
 					hidden:true
 				},{
@@ -158,7 +160,7 @@
 					backgroundColor:'#58D68D',
 					borderColor:'#58D68D',
 					yAxisID:'num',
-					data:[<?php chart_from_db("h2o_weight"); ?>],
+					data:[<?php $cg->chart_from_db("h2o_weight"); ?>],
 					fill:false,
 					hidden:true			
 				},{
@@ -174,7 +176,7 @@
 					backgroundColor:'#A569BD',
 					borderColor:'#A569BD',
 					yAxisID:'taste',
-					data:[<?php chart_string_from_db("taste");?>],
+					data:[<?php $cg->chart_string_from_db("taste");?>],
 					fill:false
 				}]
 			},
