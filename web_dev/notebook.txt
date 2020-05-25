@@ -1,0 +1,17 @@
+'2020-03-19 00:09:00','Melitta #2 Cone','Anchorhead','Narwhal Blend','28','440','00:03:00','poor','weak, consider adding more material and increase grinding'
+'2020-03-20 00:09:00','Melitta #2 Cone','Anchorhead','Narwhal Blend','14','225','00:03:00','okay','stronger, less acidic, consider increasing material'
+'2020-03-20 00:14:00','Melitta #2 Cone','Anchorhead','Narwhal Blend','15','218','00:03:00','average','could be stronger, much les acidic'
+'2020-03-22 00:09:00','Melitta #2 Cone','Anchorhead','Narwhal Blend','15','220','00:03:00','average','fairly acidic but lots of other flavors too'
+'2020-03-24 00:09:00','Melitta #2 Cone','Anchorhead','Narwhal Blend','16','220','00:03:00','good','not bad'
+'2020-04-06 00:09:00','Melitta #2 Cone','Batdorf & Bronson','Dancing Goat Blend','13','220','00:03:15','average','could try increasing ratio to see what happens'
+'2020-04-07 00:09:00','Melitta #2 Cone','Batdorf & Bronson','Dancing Goat Blend','14','220','00:03:40','average','more thick than 13g but tastes about the same, this is probably good'
+'2020-04-08 00:09:00','Melitta #2 Cone','Batdorf & Bronson','Dancing Goat Blend','13','220','00:03:35','poor','pretty bitter today, too much fines'
+'2020-04-10 00:09:00','Melitta #2 Cone','Batdorf & Bronson','Dancing Goat Blend','14','218','00:03:36','good','forgot to check time, pretty good'
+'2020-04-11 00:09:00','Melitta #2 Cone','Batdorf & Bronson','Dancing Goat Blend','14','219','00:03:10','poor','continuous pour, bit watery, not ground enough'
+'2020-04-11 00:14:00','Melitta #2 Cone','Batdorf & Bronson','Dancing Goat Blend','14','223','00:02:45','average','fines=bitter but much more flavor: spices, chocolate, fruity'
+'2020-04-13 00:09:00','Melitta #2 Cone','Batdorf & Bronson','Dancing Goat Blend','15','253','00:03:15','average','fairly ground, a bit too much, bit weak, not bad'
+'2020-04-18 00:09:00','Melitta #2 Cone','Ground Works','Ethiopia Single Origin','14','219','00:03:30','good',
+'2020-05-18 00:09:00','Melitta #2 Cone','Caffe Roma','Special Blend','14','221','00:03:30','poor','bitter, use less fine grind'
+'2020-05-19 00:09:00','French Press','Caffe Roma','Special Blend','14','220','00:03:30','good','pretty good'
+'2020-05-21 00:09:00','Melitta #2 Cone','Caffe Roma','Special Blend','13','222','00:03:25','good',
+

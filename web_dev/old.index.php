@@ -9,39 +9,40 @@
 	<?php require_once("form.php"); ?>
 	<div class="container">
           <h1>Coffee Grams</h1>
-	  <form id="cg_form">
+	  <form>
             <div class="form-group">
               <label for="brew_method">Brew Method</label>
 	      <!--<input type="text" class="form-control" id="brew_method" name="brew_method" placeholder="">-->
-		<select class="form-control" id="brew_method" name="brew_method" maxlength="30"  placeholder="Click to type...">	
-			<?php $cg->populate_from_db("brew_method"); ?>
+		<select class="form-control" id="brew_method" name="brew_method" maxlength="30"  placeholder="Click to type...">
+		      <!--<option value="melitta_cone">Melitta Cone</option>-->
+			<?php populate_from_db("brew_method"); ?>
 		</select>
             </div> 
             <div class="form-group">
               <label for="roaster">Roaster</label>
 	      <!--<input type="text" class="form-control" id="roaster" name="roaster" placeholder="">-->
 		<select class="form-control" id="roaster" name="roaster" maxlength="30" placeholder="Click to type...">
-			<?php $cg->populate_from_db("roaster"); ?> 
+			<?php populate_from_db("roaster"); ?> 
 		</select>
             </div>
             <div class="form-group">
               <label for="coffee_type">Coffee Name</label>
 	      <!--<input type="text" class="form-control" id="coffee_type" name="coffee_type" placeholder="">-->	
-		<select class="form-control" id="coffee_type" name="coffee_type" maxlength="30" placeholder="Click to type...">	
-			<?php $cg->populate_from_db("name"); ?>
+		<select class="form-control" id="coffee_type" name="coffee_type" maxlength="30" placeholder="Click to type...">
+			<?php populate_from_db("name"); ?>
 		</select>
             </div>
             <div class="form-group">
-              <label for="coffee_weight">Coffee Weight</label>
-              <input type="text" class="form-control" id="coffee_weight" name="coffee_weight" maxlength="6" placeholder="Enter coffee weight in grams">
+              <label for="coffee_weight">Coffee (grams)</label>
+              <input type="text" class="form-control" id="coffee_weight" name="coffee_weight" maxlength="6" placeholder="Enter coffee weight">
             </div>
             <div class="form-group">
-              <label for="water_weight">Water Weight</label>
-              <input type="text" class="form-control" id="water_weight" name="water_weight" maxlength="6" placeholder="Enter water weight in grams">
+              <label for="water_weight">Water (grams)</label>
+              <input type="text" class="form-control" id="water_weight" name="water_weight" maxlength="6" placeholder="Enter water weight">
             </div>
             <div class="form-group">
-              <label for="brew_time">Brew Time</label>
-              <input type="text" class="form-control" id="brew_time" name="brew_time" maxlength="8" placeholder="Format time as hh:mm:ss or mmss">
+              <label for="brew_time">Brew Time (mm:ss)</label>
+              <input type="text" class="form-control" id="brew_time" name="brew_time" maxlength="5" placeholder="Format time as mm:ss">
 	    </div>
             <div class="form-group">
               <legend>Taste</legend>
@@ -98,8 +99,8 @@
 			<th scope="col">Notes</th>
 			</tr>
 		</thead>
-		<tbody id="dt-tbody">
-			<?php $cg->table_from_db(); ?>
+		<tbody>
+			<?php table_from_db() ?>
 		</tbody>
 		</table>	
 	</div>	
@@ -113,125 +114,96 @@
 	<!-- bootstrap -->
 	<script src="//rawgithub.com/indrimuska/jquery-editable-select/master/dist/jquery-editable-select.min.js"></script>
 
+	<script>
+		//AJAX
+		$(function(){
+			$('form').on('submit',function(e){
+				e.preventDefault();
+				$.ajax({
+					type: 'POST',
+					url: 'index.php',
+					data: $('form').serialize(),
+					success: function(){
+						alert('form was submited');
+					}
+				});
+			});
+		});
+		//editable select
+		$('#brew_method').editableSelect();
+		$('#roaster').editableSelect();
+		$('#coffee_type').editableSelect();
+	</script>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-	<script>		
-//AJAX
-$(function(){
-	$('form').on('submit',function(e){
-		e.preventDefault();
-		$.ajax({
-			type: 'POST',
-			url: 'form.php',
-			data: $('#cg_form').serialize(),
-			dataType : 'json',
-			success: function(data){
-				alert('The form was submited.');
+	<script>
+		//chart.js
+		var ctx = document.getElementById('myChart').getContext('2d');
+		var chart = new Chart(ctx, {
+		    // The type of chart we want to create
+			type: 'line',
 
-				//update the table
-				var new_tbody = "";
-				for(var i=data.length-1; i > -1; i--){
-					new_tbody += "<tr>";
-					new_tbody += "<td scope=\"row\">" + data[i].timestamp + "</td>";	
-					new_tbody += "<td scope=\"row\">" + data[i].brew_method + "</td>";
-					new_tbody += "<td scope=\"row\">" + data[i].roaster + "</td>";
-					new_tbody += "<td scope=\"row\">" + data[i].name + "</td>";
-					new_tbody += "<td scope=\"row\">" + data[i].weight + "</td>";
-					new_tbody += "<td scope=\"row\">" + data[i].h2o_weight + "</td>";
-					new_tbody += "<td scope=\"row\">" + data[i].brew_time + "</td>";
-					new_tbody += "<td scope=\"row\">" + data[i].taste + "</td>";
-					new_tbody += "<td scope=\"row\">" + data[i].note + "</td>";
-					new_tbody += "</tr>";
-				}
-				$('#dt-tbody').html(new_tbody);
+		    // The data for our dataset
+			data: {
+		    		labels: [<?php chart_string_from_db("timestamp"); ?> ],
+				datasets: [{
+					label: 'Coffee Weight',
+					backgroundColor: 'rgb(255, 99, 132)',
+					borderColor: 'rgb(255, 99, 132)',
+					yAxisID:'num',
+					data: [<?php chart_from_db("weight"); ?>],
+					fill:false,
+					hidden:true
+				},{
+					label:'Water Weight',
+					backgroundColor:'#58D68D',
+					borderColor:'#58D68D',
+					yAxisID:'num',
+					data:[<?php chart_from_db("h2o_weight"); ?>],
+					fill:false,
+					hidden:true			
+				},{
+					label:'Coffee:Water Ratio',
+					backgroundColor:'#36a2eb',
+					borderColor:'#36a2eb',
+					yAxisID:'num',
+					data:[],
+					fill:false
 
-				//update the chart
-				chart.data.labels.push( data[data.length-1].timestamp );
-				ratio_weight.push( parseInt(data[data.length-1].weight) / parseInt(data[data.length-1].h2o_weight) );
-				chart.data.datasets[1].data.push( data[data.length-1].taste);
-				chart.update();
-					
+				},{
+					label:'Taste',
+					backgroundColor:'#A569BD',
+					borderColor:'#A569BD',
+					yAxisID:'taste',
+					data:[<?php chart_string_from_db("taste");?>],
+					fill:false
+				}]
 			},
-			error:function(xhr,resp,text){
-				console.log(xhr,resp,text);
+
+		    // Configuration options go here
+			options: {
+				title:{
+					display:true,
+					text: 'Coffee Graphs'
+				},
+				animation:false,
+				scales:{
+					yAxes:[{
+						id:'num',
+						type:'linear',
+						position:'left'
+					},{
+						id:'taste',
+						type:'category',
+						labels:['good','okay','average','bad','poor'],
+						position:'right'
+					}]
+				}
 			}
 		});
-	});
-});
-
-
-
-
-
-
-
-//editable select
-$('#brew_method').editableSelect();
-$('#roaster').editableSelect();
-$('#coffee_type').editableSelect();
-
-
-
-
-
-
-//chart.js
-
-var c_weight = [<?php $cg->chart_from_db("weight"); ?>];
-
-var w_weight = [<?php $cg->chart_from_db("h2o_weight"); ?>];
-var ratio_weight = [];
-for (var i=0; i<c_weight.length; i++){
-	ratio_weight.push(c_weight[i]/w_weight[i]);
-}
-
-var ctx = document.getElementById('myChart').getContext('2d');
-var chart = new Chart(ctx, {
-    // The type of chart we want to create
-	type: 'line',
-
-    // The data for our dataset
-	data: {
-		labels: [<?php $cg->chart_string_from_db("timestamp"); ?> ],
-		datasets: [{
-			label:'Coffee:Water Ratio',
-			backgroundColor:'#36a2eb',
-			borderColor:'#36a2eb',
-			yAxisID:'num',
-			data:ratio_weight,
-			fill:false
-
-		},{
-			label:'Taste',
-			backgroundColor:'#A569BD',
-			borderColor:'#A569BD',
-			yAxisID:'taste',
-			data:[<?php $cg->chart_string_from_db("taste");?>],
-			fill:false
-		}]
-	},
-
-    // Configuration options go here
-	options: {
-		title:{
-			display:true,
-			text: 'Coffee Graphs'
-		},
-		animation:false,
-		scales:{
-			yAxes:[{
-				id:'num',
-				type:'linear',
-				position:'left'
-			},{
-				id:'taste',
-				type:'category',
-				labels:['good','okay','average','bad','poor'],
-				position:'right'
-			}]
+		for (var i=0; i<chart.data.datasets[0].data.length; i++){
+			chart.data.datasets[2].data.push(chart.data.datasets[0].data[i]/chart.data.datasets[1].data[i]);
 		}
-	}
-});
+		chart.update();
 	</script>
-	
     </body>
 </html>

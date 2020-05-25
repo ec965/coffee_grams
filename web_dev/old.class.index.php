@@ -6,7 +6,7 @@
 
     </head>
     <body>
-	<?php require_once("form_class.php"); ?>
+	<?php require_once("form.php"); ?>
 	<div class="container">
           <h1>Coffee Grams</h1>
 	  <form>
@@ -121,7 +121,7 @@
 				e.preventDefault();
 				$.ajax({
 					type: 'POST',
-					url: 'index_class.php',
+					url: 'index.php',
 					data: $('form').serialize(),
 					success: function(){
 						alert('form was submited');
