@@ -67,6 +67,7 @@ class cg_form extends db_connect{
 	}
 
 	//insert an associative array into the database
+	//take not that the first value is DEFAULT
 	private function insert_form_db($data_array){
 		$this->conn_db();
 		$sql = "INSERT INTO " . $this->table . " VALUES (DEFAULT";
@@ -77,9 +78,9 @@ class cg_form extends db_connect{
 		
 		//echo $sql;	
 		if ($this->conn->query($sql) === TRUE){
-			//echo "New record created successfully";
+		//	echo "New record created successfully";
 		}else{
-			//echo "Error: " . $sql . "<br>" . $this->conn->error;
+			echo "Error: " . $sql . "<br>" . $this->conn->error;
 		}
 		$this->disconn_db();
 	}
@@ -94,7 +95,7 @@ class cg_form extends db_connect{
 		}
 		$sql = rtrim($sql, ", ");
 		$sql .= (" FROM " . $this->table . ";");
-	//	echo $sql;
+		//echo $sql;
 			
 		$result = $this->conn->query($sql);
 		while ($row=$result->fetch_array(MYSQLI_ASSOC)){
@@ -121,42 +122,43 @@ class cg_form extends db_connect{
 		$this->cg_data["taste"] = $this->test_input($_POST["taste"]);
 		$this->cg_data["notes"] = $this->test_input($_POST["notes"]);
 
-		$error = "Error: ";
+		$error = "";
 
 		if( strlen($this->cg_data['brew_method']) > 30){
-			$error.= "brew_method; ";
+			$error.= "brew_method err; ";
 		}
 		if( strlen($this->cg_data['roaster']) > 30 ){
-			$error.= "roaster; ";
+			$error.= "roaster err; ";
 		}
 		if( strlen($this->cg_data['coffee_type']) > 30 ){
-			$error.="coffee_type; ";
+			$error.="coffee_type err; ";
 		}
 		if( floatval($this->cg_data['coffee_weight']) > 999.99 ){
-			$error.= "coffee_weight; ";
+			$error.= "coffee_weight err; ";
 		}
 		if( floatval($this->cg_data['water_weight']) > 999.99 ){
-			$error .= "water_weight; ";
+			$error .= "water_weight err; ";
 		}
 		if( !(preg_match("/([0-9]{2}):([0-5][0-9]):([0-5])([0-9])/",$this->cg_data['brew_time'])) && !(preg_match("/[0-5][0-9][0-5][0-9]/",$this->cg_data['brew_time'])) && !(preg_match("/[0-9][0-5][0-9]/",$this->cg_data['brew_time'])) ){
-			$error .= "brew_time; ";
+			$error .= "brew_time err; ";
 		}
 		$taste_check = array('ok','good','average','poor','bad');
 		if( !(in_array($this->cg_data['taste'], $taste_check)) ){
-			$error.="taste; ";	
+			$error.="taste err; ";	
 		}
 		if( strlen($this->cg_data['notes']) > 100){
-			$error.="notes;";
+			$error.="notes err;";
 		}
 
-		if ($error == "Error: "){
+		if ($error == ""){
 			$this->insert_form_db($this->cg_data);
 			//if everything matches, we can insert the data into the database
-			$error .= "none";
 		}
-		//echo $error;
+		else{
+			echo $error;
+		}
 	}	
-
+	//used to populate form field select options
 	public function populate_from_db($select_item){	
 		$this->conn_db();
 		$sql = ("SELECT DISTINCT " . $select_item ." FROM " .$this->table . ";");
@@ -164,9 +166,14 @@ class cg_form extends db_connect{
 		$result = $this->conn->query($sql);
 
 		if ($result->num_rows > 0) {
-			$i=0;
+			$data = array();
 			while($row = $result->fetch_assoc()) {
-				echo "<option value=\"item-" . $i . "\">" . $row[$select_item] . "</option>";
+				$data[] = $row[$select_item];
+			}
+			$data = array_reverse($data, true);
+			$i=0;
+			foreach ($data as $item){
+				echo "<option value=\"item-" . $i . "\">" . $item . "</option>";
 				$i++;
 			}
 		} 

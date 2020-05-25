@@ -115,10 +115,70 @@
 
 	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 	<script>		
+function form_validation(){
+	var errors = 0;
+	if( !$('#brew_method').val()){
+		console.log('b meth not selected');
+		errors += 1;
+	}
+	if( !$('#roaster').val()){
+		console.log('roaster not selected');
+		errors += 1;
+	}
+	if( !$('#coffee_type').val()){
+		console.log('c_type not selected');
+		errors += 1;
+	}
+	var c_weight = parseFloat($('#coffee_weight').val());
+	if( (c_weight > 999.99) || (c_weight < 0)){
+		console.log('c_weight too big or negative');
+		errors +=1;
+	}
+	var w_weight = parseFloat($('#water_weight').val());
+	if ( (w_weight > 999.99) || (w_weight < 0)){
+		console.log('w_weight too big or negative');
+		errors +=1;
+	}
+
+	//validate the time against these 3 regex keys
+	const time_key1 = new RegExp(/([0-9]{2}):([0-5][0-9]):([0-5])([0-9])/);
+	const time_key2 = new RegExp(/[0-5][0-9][0-5][0-9]/);
+	const time_key3 = new RegExp(/[0-9][0-5][0-9]/);
+	var br_time = $('#brew_time').val();
+	
+	console.log(time_key1.test(br_time));
+	console.log(time_key2.test(br_time));
+	console.log(time_key3.test(br_time));
+
+	if ( !( time_key1.test(br_time) || time_key2.test(br_time) || time_key3.test(br_time))){
+		console.log('br_time format is invalid');
+		errors+=1;
+	}
+	if ( !$("input:radio[name='taste']:checked").is(':checked')){
+		console.log('please select a taste');
+		errors+=1;
+	}
+	if( $('#notes').text().length > 100){
+		console.log('notes error');
+		errors + 1;
+	}	
+	if(errors > 0){
+		console.log('form invalid');
+		return false;
+	}
+	else{
+		console.log('form valid');
+		return true;	
+	}
+}	
+
+
+
 //AJAX
-$(function(){
-	$('form').on('submit',function(e){
-		e.preventDefault();
+
+$('#cg_form').on('submit',function(e){
+	e.preventDefault();
+	if(form_validation()){
 		$.ajax({
 			type: 'POST',
 			url: 'form.php',
@@ -126,7 +186,7 @@ $(function(){
 			dataType : 'json',
 			success: function(data){
 				alert('The form was submited.');
-
+				console.log(data);
 				//update the table
 				var new_tbody = "";
 				for(var i=data.length-1; i > -1; i--){
@@ -155,23 +215,14 @@ $(function(){
 				console.log(xhr,resp,text);
 			}
 		});
-	});
+	}
 });
 
-
-
-
-
-
-
+ 
 //editable select
 $('#brew_method').editableSelect();
 $('#roaster').editableSelect();
 $('#coffee_type').editableSelect();
-
-
-
-
 
 
 //chart.js
