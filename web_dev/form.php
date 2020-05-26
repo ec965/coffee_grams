@@ -4,6 +4,7 @@ ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
+//login using JSON
 $json_login = file_get_contents("login.json");
 $login_array = json_decode($json_login, true);
 
@@ -13,12 +14,13 @@ $password = $login_array["password"];
 $database = $login_array["database"];
 $table = "enoch";
 
+//create a new cg form class
 $cg = new cg_form($username,$host,$password,$database,$table);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
-	$cg->check_form();
+	$cg->check_form();//backend form validation
 	$sel_arr = array('timestamp','brew_method','roaster','name','weight','h2o_weight','brew_time','taste','note');
-	$cg->send_sql_json($sel_arr);
+	$cg->send_sql_json($sel_arr);//send back db data
 }
 
 class db_connect {
@@ -49,9 +51,10 @@ class db_connect {
 
 class cg_form extends db_connect{
 	
-	//form variables
-
+	//table for the db
 	private $table;
+
+	//save all form data into this array
 	private $cg_data = array("brew_method"=>null,
 		"roaster"=>null, 
 		"coffee_type"=>null, 
@@ -183,6 +186,7 @@ class cg_form extends db_connect{
 
 		$this->disconn_db();
 	}
+	//inject info into javascript for initial chart values
 	public function chart_from_db($select_item){
 		$this->conn_db();
 		$sql = ("SELECT " . $select_item . " FROM " . $this->table . ";");
@@ -204,6 +208,7 @@ class cg_form extends db_connect{
 
 		$this->disconn_db();
 	}
+	//inject info into javascript for initial chart values
 	public function chart_string_from_db($select_item){
 		$this->conn_db();
 		$sql = ("SELECT " . $select_item . " FROM " . $this->table . ";");
@@ -226,7 +231,7 @@ class cg_form extends db_connect{
 
 		$this->disconn_db();
 	}
-
+	//inject html to populate the table on the webpage
 	public function table_from_db(){
 		
 		$this->conn_db();
