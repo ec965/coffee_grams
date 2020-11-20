@@ -851,7 +851,7 @@ Wire Wire Line
 Wire Wire Line
 	1800 7650 1800 7100
 $Comp
-L Connector:USB_B_Mini J1
+L coffee_grams-rescue:USB_B_Mini-Connector J1
 U 1 1 5EDB6F28
 P 1500 7850
 F 0 "J1" H 1557 8317 50  0000 C CNN
@@ -1081,12 +1081,8 @@ Text Label 12600 8100 0    50   ~ 0
 LCD_D6
 Text Label 12600 8200 0    50   ~ 0
 LCD_D7
-Wire Wire Line
-	8800 8150 9200 8150
-Text Label 9200 8350 0    50   ~ 0
+Text Label 9200 7550 0    50   ~ 0
 LCD_RS
-Text Label 9200 8150 0    50   ~ 0
-LCD_E
 $Comp
 L RF_Module:ESP32-WROOM-32 U3
 U 1 1 5F119DD3
@@ -1109,11 +1105,9 @@ Wire Wire Line
 Wire Wire Line
 	8800 9050 9250 9050
 Wire Wire Line
-	8800 8350 9200 8350
+	8800 7550 9200 7550
 Wire Wire Line
 	8800 8050 9200 8050
-Text Label 9200 7650 0    50   ~ 0
-LCD_D0
 Text Label 9200 6950 0    50   ~ 0
 LCD_D1
 Wire Wire Line
@@ -1145,30 +1139,20 @@ Wire Wire Line
 Text Label 9200 8050 0    50   ~ 0
 LCD_D7
 Wire Wire Line
-	8800 7650 9200 7650
-Wire Wire Line
 	8800 8850 9250 8850
 Wire Wire Line
 	8800 8750 9250 8750
-Text Label 9200 8550 0    50   ~ 0
+Text Label 9200 8250 0    50   ~ 0
 BX_TARE
-Text Label 9200 8650 0    50   ~ 0
-BX_ON_OFF
 Wire Wire Line
 	8800 8450 9200 8450
 Text Label 9200 8450 0    50   ~ 0
 BX_TIMER
 Wire Wire Line
-	8800 8550 9200 8550
-Wire Wire Line
-	8800 8650 9200 8650
+	8800 8250 9200 8250
 Text Label 9250 8850 0    50   ~ 0
 BX_COFFEE_G
-Text Label 9250 8750 0    50   ~ 0
-BX_H2O_G
 NoConn ~ 8800 7350
-NoConn ~ 8800 7450
-NoConn ~ 8800 7550
 Wire Wire Line
 	8200 6550 8200 6000
 Wire Wire Line
@@ -1201,7 +1185,7 @@ F 3 "" H 13650 8600 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	13650 6800 13650 6300
-NoConn ~ 8800 8250
+NoConn ~ 8800 8550
 $Comp
 L power:+3.3V #PWR015
 U 1 1 5F5F7897
@@ -1663,4 +1647,20 @@ F 3 "" H 8550 1850 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	8550 1700 8550 1850
+Wire Wire Line
+	8800 7650 9200 7650
+NoConn ~ 8800 8150
+NoConn ~ 8800 8650
+Text Label 9200 7650 0    50   ~ 0
+LCD_D0
+Wire Wire Line
+	8800 7450 9200 7450
+Text Label 9200 7450 0    50   ~ 0
+LCD_E
+Text Label 9250 8750 0    50   ~ 0
+BX_H2O_G
+Wire Wire Line
+	8800 8350 9200 8350
+Text Label 9200 8350 0    50   ~ 0
+BX_ON_OFF
 $EndSCHEMATC

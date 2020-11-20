@@ -1,3 +1,4 @@
 (sym_lib_table
   (lib (name coffee_grams)(type Legacy)(uri ${KIPRJMOD}/coffee_grams.lib)(options "")(descr ""))
+  (lib (name coffee_grams-rescue)(type Legacy)(uri ${KIPRJMOD}/coffee_grams-rescue.lib)(options "")(descr ""))
 )
